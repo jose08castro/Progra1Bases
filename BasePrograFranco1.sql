@@ -4,7 +4,7 @@ GO
 
 USE [BD_sistemaEscolar]
 
---Drop table dbo.Estudiante
+--Drop table dbo.EstudianteXGrupo
 
 CREATE TABLE [dbo].[Estudiante](
     [IdEstudiante] [int] identity (1,1) NOT NULL PRIMARY KEY,--carne
@@ -76,7 +76,7 @@ CREATE TABLE [dbo].[GrupoXCurso](
 USE [BD_sistemaEscolar]
 
 CREATE TABLE [dbo].[EstudianteXGrupo](
-    [IdGrupo] [int]  FOREIGN KEY REFERENCES Grupo(IdGrupo),
+    [IdGrupo] [int]  FOREIGN KEY REFERENCES Grupo(IdGrupo) PRIMARY KEY,
 	[CarneEstudiante][int]  FOREIGN KEY REFERENCES Estudiante(IdEstudiante))
 
 USE [BD_sistemaEscolar]
@@ -84,3 +84,15 @@ USE [BD_sistemaEscolar]
 CREATE TABLE [dbo].[ProfesorXGrupo](
     [IdGrupo] [int]  FOREIGN KEY REFERENCES Grupo(IdGrupo),
 	[CarneProfesor][int]  FOREIGN KEY REFERENCES Profesor(IdProfesor))
+
+
+USE [BD_sistemaEscolar]
+
+CREATE TABLE [dbo].[NotasXGrupo](
+    [Id] [int] identity (1,1) NOT NULL PRIMARY KEY,
+	[IdGrupo] [int] FOREIGN KEY REFERENCES EstudianteXGrupo(IdGrupo),
+	[IdEstudiante][nvarchar](150) NOT NULL,
+	[Rubro][int] NOT NULL,
+	[Numero][tinyint] NOT NULL,
+    [Valor] [tinyint] NOT NULL,
+	[Obtenido] [tinyint] NULL)

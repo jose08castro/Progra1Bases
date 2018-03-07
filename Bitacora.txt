@@ -3,3 +3,4 @@
     Tiempo invertido: 3 Horas
 6/marzo:
 	Juan: Creación de la base de datos propuesta en el grupo en SQL.
+	Tiempo invertido: 3 Horas
