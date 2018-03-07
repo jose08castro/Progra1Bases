@@ -1,3 +1,5 @@
-3/marzo:
+﻿3/marzo:
   Juan: Estudio del caso de la progra.Estudio del diseño aportado por el profesor.Creación de diseño propio. 
     Tiempo invertido: 3 Horas
+6/marzo:
+	Juan: Creación de la base de datos propuesta en el grupo en SQL.
