@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[Profesor](
     [IdProfesor] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[Nombre][nvarchar](150) NOT NULL,
 	[Email][nvarchar](150)  NULL,
+	[Password][nvarchar](150) NOT NULL,
 	[Telefono][int] NULL)
 
 USE [BD_sistemaEscolar]
