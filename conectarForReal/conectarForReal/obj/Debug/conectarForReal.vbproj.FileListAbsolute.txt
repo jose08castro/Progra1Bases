@@ -1,0 +1,12 @@
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\bin\Debug\conectarForReal.exe.config
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\bin\Debug\conectarForReal.exe
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\bin\Debug\conectarForReal.pdb
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\bin\Debug\conectarForReal.xml
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.vbprojResolveAssemblyReference.cache
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.Form1.resources
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.Resources.resources
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.vbproj.GenerateResource.Cache
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.vbproj.CoreCompileInputs.cache
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.exe
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.xml
+C:\Users\Evelio\source\repos\conectarForReal\conectarForReal\obj\Debug\conectarForReal.pdb
