@@ -58,14 +58,18 @@ CREATE TABLE [dbo].[Evaluacion](
 
 USE [BD_sistemaEscolar]
 
+CREATE TABLE [dbo].[Status_Grupo](
+    [IdStatus_Grupo] [int] identity (1,1) NOT NULL PRIMARY KEY,
+	[Nombre] [nvarchar](50) NOT NULL)
+
+USE [BD_sistemaEscolar]
+
 CREATE TABLE [dbo].[Grupo](
     [IdGrupo] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[IdEvaluacion] [int] FOREIGN KEY REFERENCES Evaluacion(IdEvaluacion),
 	[IdProfesor][int] FOREIGN KEY REFERENCES Profesor(IdProfesor),
 	[Nombre][nvarchar](150) NOT NULL,
-	[HoraIni][time] NOT NULL,
-	[HoraFin][time] NOT NULL,
-    [Aula] [nvarchar](50) NULL)
+	[Status][int]  FOREIGN KEY REFERENCES Status_Grupo(IdStatus_Grupo))
 
 
 USE [BD_sistemaEscolar]
@@ -74,12 +78,18 @@ CREATE TABLE [dbo].[GrupoXCurso](
     [IdCurso] [int]  FOREIGN KEY REFERENCES Curso(IdCurso),
     [IdGrupo] [int] FOREIGN KEY REFERENCES Grupo(IdGrupo))
 
+USE [BD_sistemaEscolar]
+
+CREATE TABLE [dbo].[Status_Estudiante](
+    [IdStatus_Estudiante] [int] identity (1,1) NOT NULL PRIMARY KEY,
+	[Nombre] [nvarchar](50) NOT NULL)
 
 USE [BD_sistemaEscolar]
 
 CREATE TABLE [dbo].[EstudianteXGrupo](
     [IdGrupo] [int]  FOREIGN KEY REFERENCES Grupo(IdGrupo) PRIMARY KEY,
-	[IdEstudiante][int]  FOREIGN KEY REFERENCES Estudiante(IdEstudiante))
+	[IdEstudiante][int]  FOREIGN KEY REFERENCES Estudiante(IdEstudiante),
+	[Status][int]  FOREIGN KEY REFERENCES Status_Estudiante(IdStatus_Estudiante))
 
 
 USE [BD_sistemaEscolar]
