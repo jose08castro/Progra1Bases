@@ -1,3 +1,5 @@
+
+--para estudiantes 
 USE  OPENXMLTesting
 GO
 
@@ -30,9 +32,12 @@ USE  [BD_sistemaEscolar]
 select * from dbo.Estudiante
 EXEC sp_xml_removedocument @hDoc
 GO
+
+--para los profesores 
 USE  OPENXMLTesting
 GO
 
+declare @tempo as table(nombre nvarchar(150), email nvarchar(150), password nvarchar(150))
 
 DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)
 
@@ -41,6 +46,7 @@ SELECT @XML = XMLData FROM  XMLwithOpenXML
 
 EXEC sp_xml_preparedocument @hDoc OUTPUT, @XML
 
+insert into @tempo
 SELECT  TeacherName,TeacherEmail,TeacherPassword
 FROM OPENXML(@hDoc, 'XML/teacherData/teacher')
 WITH 
@@ -50,9 +56,76 @@ TeacherEmail [nvarchar](150) '@email' ,
 TeacherPassword [nvarchar](150) '@password'
 );
 
+USE  [BD_sistemaEscolar]
+
+--insert into dbo.Profesor(Nombre,Email,Password)
+--select * from @tempo
+
+select * from dbo.Profesor
+
 EXEC sp_xml_removedocument @hDoc
 GO
 
---USE  [BD_sistemaEscolar]
+--status estudiantes 
 
---select * from dbo.Estudiante
+USE  OPENXMLTesting
+GO
+
+declare @tempo as table(nombre nvarchar(50))
+
+DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)
+
+
+SELECT @XML = XMLData FROM  XMLwithOpenXML
+
+EXEC sp_xml_preparedocument @hDoc OUTPUT, @XML
+
+insert into @tempo
+SELECT  StatusName
+FROM OPENXML(@hDoc, 'XML/studentGroupStateData/studentGroupState')
+WITH 
+(
+StatusName [nvarchar](50) '@name'
+);
+
+USE  [BD_sistemaEscolar]
+
+--insert into dbo.Status_Estudiante(Nombre)
+--select * from @tempo
+
+select * from dbo.Status_Estudiante
+
+EXEC sp_xml_removedocument @hDoc
+GO
+
+--para status grupo
+
+USE  OPENXMLTesting
+GO
+
+declare @tempo as table(nombre nvarchar(50))
+
+DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)
+
+
+SELECT @XML = XMLData FROM  XMLwithOpenXML
+
+EXEC sp_xml_preparedocument @hDoc OUTPUT, @XML
+
+insert into @tempo
+SELECT  StatusName
+FROM OPENXML(@hDoc, 'XML/groupStateData/groupState')
+WITH 
+(
+StatusName [nvarchar](50) '@name'
+);
+
+USE  [BD_sistemaEscolar]
+--select * from @tempo
+--insert into dbo.Status_Grupo(Nombre)
+--select * from @tempo
+
+select * from dbo.Status_Grupo
+
+EXEC sp_xml_removedocument @hDoc
+GO

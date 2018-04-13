@@ -21,22 +21,12 @@ CREATE TABLE [dbo].[Profesor](
     [IdProfesor] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[Nombre][nvarchar](150) NOT NULL,
 	[Email][nvarchar](150)  NULL,
-	[Password][nvarchar](150) NOT NULL,
-	[Telefono][int] NULL)
-
-USE [BD_sistemaEscolar]
-
-CREATE TABLE [dbo].[PeriodoLectivo](
-    [IdPeriodo] [int] identity (1,1) NOT NULL PRIMARY KEY,
-	[FechaIni][DATETIME] NOT NULL,
-    [FechaFin] [datetime] NULL)
-
+	[Password][nvarchar](150) NOT NULL)
 
 USE [BD_sistemaEscolar]
 
 CREATE TABLE [dbo].[Curso](
     [IdCurso] [int] identity (1,1) NOT NULL PRIMARY KEY,
-	[IdPeriodo][int]  FOREIGN KEY REFERENCES PeriodoLectivo(IdPeriodo),
     [Estado] [nvarchar](10) NOT NULL)--cre=creado,eje=ejecución, anu=anulado y fin=finalizado
 
 
@@ -67,16 +57,11 @@ USE [BD_sistemaEscolar]
 CREATE TABLE [dbo].[Grupo](
     [IdGrupo] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[IdEvaluacion] [int] FOREIGN KEY REFERENCES Evaluacion(IdEvaluacion),
+	[IdCurso] [int] FOREIGN KEY REFERENCES Curso(IdCurso),
 	[IdProfesor][int] FOREIGN KEY REFERENCES Profesor(IdProfesor),
 	[Nombre][nvarchar](150) NOT NULL,
 	[Status][int]  FOREIGN KEY REFERENCES Status_Grupo(IdStatus_Grupo))
 
-
-USE [BD_sistemaEscolar]
-
-CREATE TABLE [dbo].[GrupoXCurso](
-    [IdCurso] [int]  FOREIGN KEY REFERENCES Curso(IdCurso),
-    [IdGrupo] [int] FOREIGN KEY REFERENCES Grupo(IdGrupo))
 
 USE [BD_sistemaEscolar]
 
