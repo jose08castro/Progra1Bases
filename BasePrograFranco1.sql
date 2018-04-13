@@ -23,12 +23,6 @@ CREATE TABLE [dbo].[Profesor](
 	[Email][nvarchar](150)  NULL,
 	[Password][nvarchar](150) NOT NULL)
 
-USE [BD_sistemaEscolar]
-
-CREATE TABLE [dbo].[Curso](
-    [IdCurso] [int] identity (1,1) NOT NULL PRIMARY KEY,
-    [Estado] [nvarchar](10) NOT NULL)--cre=creado,eje=ejecución, anu=anulado y fin=finalizado
-
 
 USE [BD_sistemaEscolar]
 
@@ -57,7 +51,8 @@ USE [BD_sistemaEscolar]
 CREATE TABLE [dbo].[Grupo](
     [IdGrupo] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[IdEvaluacion] [int] FOREIGN KEY REFERENCES Evaluacion(IdEvaluacion),
-	[IdCurso] [int] FOREIGN KEY REFERENCES Curso(IdCurso),
+	[Periodo] [int] NOT NULL,
+	[Codigo] [nvarchar](50) NOT NULL,
 	[IdProfesor][int] FOREIGN KEY REFERENCES Profesor(IdProfesor),
 	[Nombre][nvarchar](150) NOT NULL,
 	[Status][int]  FOREIGN KEY REFERENCES Status_Grupo(IdStatus_Grupo))
