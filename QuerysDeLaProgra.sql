@@ -1,4 +1,6 @@
 -- 1
+
+Use [BD_sistemaEscolar]
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -11,7 +13,8 @@ GO
 CREATE PROCEDURE Obtner_Id_Estudiante(
 	-- Add the parameters for the stored procedure here
 	@Email nvarchar(150),
-	@Contrasenna nvarchar(150) 
+	@Contrasenna nvarchar(150), 
+	@Resultado int OUTPUT
 	)
 AS
 BEGIN
@@ -20,7 +23,8 @@ BEGIN
 	declare @Result int
 	SET NOCOUNT ON;
 	Set @Result = (select E.IdEstudiante from Estudiante E where E.Email=@Email and E.Password=@Contrasenna)
-	return Select ISNULL(@Result, -1)
+	set @Resultado = ISNULL(@Result, -1)
+	RETURN @Resultado
 END
 GO
 
