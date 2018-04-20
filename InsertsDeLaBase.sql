@@ -252,16 +252,16 @@ BEGIN
 	BEGIN TRAN insertar
 		begin try
 		Set @Existe = (Select R.IdRubro from Rubro R where R.Nombre=@Nombre )
-		IF() 
+		IF @Existe IS NULL
 			BEGIN
-			Insert Into dbo.Periodo_Lectivo(Inicio,Fin,Activo)
-			Values(@Inicio,@Fin,@Activo)
+			Insert Into dbo.Rubro(Nombre)
+			Values(@Nombre)
 			set @Result = 1--correcto
 			END
 		ELSE 
 			BEGIN
 			rollback TRAN insertar
-			set @Result = -2--fin mayor que inicio 
+			set @Result = -2--ya existe rubro con ese nombre 
 			END
 		end try 
 		begin catch
@@ -269,6 +269,53 @@ BEGIN
 		set @Result = -1--hubo un problema
 		end catch	
 	if(@Result !=-1 AND  @Result !=-2)
+	begin
+	commit tran insertar
+	end
+	return @Result
+END
+GO
+
+
+
+-- 6
+
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <14/4/17>
+-- Description:	<Insertar Grupo>
+-- =============================================
+CREATE PROCEDURE Insertar_Grupo(
+	-- Add the parameters for the stored procedure here
+	@IdPeriodo int,
+	@Codigo nvarchar(150),
+	@IdProfesor int,
+	@Nombre nvarchar(150),
+	@IdStatus int,
+	@Result int OUTPUT
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements. 
+	
+	SET NOCOUNT ON;
+	BEGIN TRAN insertar
+		begin try
+		Insert Into dbo.Grupo(IdPeriodo,Codigo,IdProfesor,Nombre,Status)
+		Values(@IdPeriodo,@Codigo,@IdProfesor,@Nombre,@IdStatus)
+		set @Result = 1--correcto
+		end try 
+		begin catch
+		rollback TRAN insertar
+		set @Result = -1--hubo un problema
+		end catch	
+	if(@Result !=-1)
 	begin
 	commit tran insertar
 	end

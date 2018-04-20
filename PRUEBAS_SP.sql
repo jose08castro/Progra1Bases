@@ -93,3 +93,18 @@ EXec Insertar_Status 'corriendo',1, @Result=@resultado OUTPUT;
 select @resultado
 
 select * from Status_Grupo
+
+
+--prueba insertar rubro 
+Use [BD_sistemaEscolar]
+
+go 
+declare @resultado int
+
+EXec Insertar_Rubro 'suka blyat', @Result=@resultado OUTPUT;
+
+select @resultado
+
+select * from Rubro
+
+
