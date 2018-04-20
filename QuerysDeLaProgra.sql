@@ -97,25 +97,27 @@ GO
 -- =============================================
 -- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
 -- Create date: <10/4/18>
--- Description:	<Obtener >
+-- Description:	<Obtener grupos por profesor >
 -- =============================================
-CREATE PROCEDURE Obtene(
+CREATE PROCEDURE Obtener_GruposPorProfesor(
 	-- Add the parameters for the stored procedure here
-	@IdGrupo int
+	@IdProfesor int,
+	@Class INT
 	)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
-	declare @Result table (IdGrupo int,IdEstudiante int, Nombre nvarchar(200) )
+	declare @Result table (IdGrupo int,IdPerido int,Codigo nvarchar(50),Nombre nvarchar(200))
 	SET NOCOUNT ON;
-	insert into @Result
-	Select E.IdGrupo,E.IdEstudiante, ES.Nombre from EstudiantesXGrupo E inner join Estudiante ES on E.IdEstudiante=ES.IdEstudiante where E.IdGrupo=@IdGrupo
-
+	IF(@Class = 1)--para grupos activos
+	BEGIN
+		insert into @Result
+		Select G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre FROM Grupo G INNER JOIN Periodo_Lectivo P ON G.IdPeriodo=P.IdPeriodo WHERE P.Activo='TRUE' AND G.IdProfesor=@IdProfesor
+	END
+	ELSE--para grupos incativos 
 	Select * from @Result 
 END
 GO
 
---Use [BD_sistemaEscolar]
---Select E.IdGrupo,E.IdEstudiante, ES.Nombre from EstudiantesXGrupo E inner join Estudiante ES on E.IdEstudiante=ES.IdEstudiante where E.IdGrupo=3
-
+SELECT * FROM Periodo_Lectivo

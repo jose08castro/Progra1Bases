@@ -106,7 +106,7 @@ BEGIN
 END
 GO
 
--- 
+-- 3
 
 Use [BD_sistemaEscolar]
 SET ANSI_NULLS ON
@@ -128,29 +128,27 @@ CREATE PROCEDURE Crear_Periodo(
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	declare @Existe int 
+	-- interfering with SELECT statements. 
 	SET NOCOUNT ON;
 	BEGIN TRAN insertar
 		begin try
-		Set @Existe = (Select p.IdProfesor from Profesor P where P.Email=@Email)
-		IF @Existe IS NULL
+		IF(@FIN>@Inicio) 
 			BEGIN
-				Insert Into DBO.Profesor(Nombre,Apellido,Email,Password)
-				Values(@Nombre,@Apellido,@Email,@Password)
-				set @Result = 1--correcto
+			Insert Into dbo.Periodo_Lectivo(Inicio,Fin,Activo)
+			Values(@Inicio,@Fin,@Activo)
+			set @Result = 1--correcto
 			END
-		ELSE
-			BEGIN 
-				rollback TRAN insertar
-				SET @Result = -2--ya existe
+		ELSE 
+			BEGIN
+			rollback TRAN insertar
+			set @Result = -2--fin mayor que inicio 
 			END
 		end try 
 		begin catch
 		rollback TRAN insertar
 		set @Result = -1--hubo un problema
 		end catch	
-	if(@Result !=-1 AND @Result !=-2)
+	if(@Result !=-1 AND  @Result !=-2)
 	begin
 	commit tran insertar
 	end
