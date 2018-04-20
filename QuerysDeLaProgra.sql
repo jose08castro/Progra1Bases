@@ -99,7 +99,7 @@ GO
 -- Create date: <10/4/18>
 -- Description:	<Obtener >
 -- =============================================
-CREATE PROCEDURE Obtener_Estudiantes_Grupo(
+CREATE PROCEDURE Obtene(
 	-- Add the parameters for the stored procedure here
 	@IdGrupo int
 	)

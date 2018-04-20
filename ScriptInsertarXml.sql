@@ -3,7 +3,7 @@
 USE  OPENXMLTesting
 GO
 
-declare @tempo as table(nombre nvarchar(150), email nvarchar(150), password nvarchar(150), telefono int, estado nvarchar(150))
+declare @tempo as table(nombre nvarchar(150),apellido nvarchar(150), email nvarchar(150), password nvarchar(150),Carnet int, telefono int)
 
 DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)
 
@@ -15,19 +15,21 @@ EXEC sp_xml_preparedocument @hDoc OUTPUT, @XML
 
 --Insert into dbo.Estudiante(Nombre,Email,Password,Telefono,Estado)
 insert into @tempo
-SELECT  StudentName,StudentEmail,StudentPassword,Studentphone,'Acti'
+SELECT  StudentName,StudentLastName,StudentEmail,StudentPassword,StudentCarnet,Studentphone
 FROM OPENXML(@hDoc, 'XML/studentData/student')
 WITH 
 (
 StudentName [nvarchar](150) '@name',
+StudentLastName [nvarchar](150) '@lastName',
 StudentEmail [nvarchar](150) '@email' ,
 StudentPassword [nvarchar](150) '@carnet',
+StudentCarnet [nvarchar](150) '@carnet',
 Studentphone [int] '@phone'
 );
 
 USE  [BD_sistemaEscolar]
 
-insert into dbo.Estudiante(Nombre,Email,Password,Telefono,Estado)
+insert into dbo.Estudiante(Nombre,Apellido,Email,Password,Carnet,Telefono)
 select * from @tempo
 select * from dbo.Estudiante
 EXEC sp_xml_removedocument @hDoc

@@ -7,14 +7,13 @@ USE [BD_sistemaEscolar]
 --Drop table dbo.Grupo
 
 CREATE TABLE [dbo].[Estudiante](
-    [IdEstudiante] [int] identity (1,1) NOT NULL PRIMARY KEY,--carne
+    [IdEstudiante] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[Nombre][nvarchar](150) NOT NULL,
 	[Apellido][nvarchar](150) NULL,
 	[Email][nvarchar](150)  NOT NULL,
 	[Password][nvarchar](150) NOT NULL,
 	[Carnet][int] NULL,
-	[Telefono][int] NULL,
-    [Estado] [nvarchar](10) NOT NULL)
+	[Telefono][int] NULL)
 
 
 USE [BD_sistemaEscolar]
