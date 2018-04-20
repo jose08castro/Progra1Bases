@@ -1,10 +1,3 @@
-
-
-Use [BD_sistemaEscolar]
-
-IF EXISTS(Select E.IdEstudiante from Estudiante E where E.Email='CadeqeDoapuofuvouko93@edger.ik') THEN SELECT 1
-
-
 -- 1
 SET ANSI_NULLS ON
 GO
@@ -37,11 +30,12 @@ BEGIN
 		IF @Existe IS NULL
 			BEGIN
 				Insert Into DBO.Estudiante(Nombre,Apellido,Email,Password,Carnet,Telefono)
-				Values(@Codigo,@Nombre,@Descripcion,@TipoFirma,@RolSeguridad,'I',@Tiempo,@Tipo)
+				Values(@Nombre,@Apellido,@Email,@Password,@Carnet,@Telefono)
 				set @Result = 1
 			END
 		ELSE
 			BEGIN 
+				rollback TRAN insertar
 				SET @Result = -2
 			END
 		end try 
@@ -56,3 +50,5 @@ BEGIN
 	return @Result
 END
 GO
+
+commit

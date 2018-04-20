@@ -40,3 +40,15 @@ insert into @Result
 EXEC Obtener_Estudiantes_Grupo @grupo;
 
 Select * from @Result
+
+
+
+--prueba insertar estudiante
+Use [BD_sistemaEscolar]
+
+go 
+declare @resultado int
+
+EXec Insertar_Estudiante 'juan','solano','juanjose.com','12345',2016086099,88867215
+
+select @resultado
