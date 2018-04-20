@@ -39,7 +39,7 @@ GO
 USE  OPENXMLTesting
 GO
 
-declare @tempo as table(nombre nvarchar(150), email nvarchar(150), password nvarchar(150))
+declare @tempo as table(nombre nvarchar(150),apellido nvarchar(150), email nvarchar(150), password nvarchar(150))
 
 DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)
 
@@ -49,18 +49,19 @@ SELECT @XML = XMLData FROM  XMLwithOpenXML
 EXEC sp_xml_preparedocument @hDoc OUTPUT, @XML
 
 insert into @tempo
-SELECT  TeacherName,TeacherEmail,TeacherPassword
+SELECT  TeacherName,TeacherLastName,TeacherEmail,TeacherPassword
 FROM OPENXML(@hDoc, 'XML/teacherData/teacher')
 WITH 
 (
 TeacherName [nvarchar](150) '@name',
+TeacherLastName [nvarchar](150) '@lastName',
 TeacherEmail [nvarchar](150) '@email' ,
 TeacherPassword [nvarchar](150) '@password'
 );
 
 USE  [BD_sistemaEscolar]
 
-insert into dbo.Profesor(Nombre,Email,Password)
+insert into dbo.Profesor(Nombre,Apellido,Email,Password)
 select * from @tempo
 
 select * from dbo.Profesor

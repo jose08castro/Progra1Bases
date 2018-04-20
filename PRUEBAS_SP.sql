@@ -49,6 +49,8 @@ Use [BD_sistemaEscolar]
 go 
 declare @resultado int
 
-EXec Insertar_Estudiante 'juan','solano','juanjose.com','12345',2016086099,88867215
+EXec Insertar_Estudiante 'juan','solano','juanjose.com','12345',2016086099,88867215,@Result=@resultado OUTPUT;
 
 select @resultado
+
+--select * from Estudiante
