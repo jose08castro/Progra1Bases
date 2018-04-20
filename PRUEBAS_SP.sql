@@ -28,4 +28,15 @@ EXEC Obtener_Id_Profesor @Ema,@Con,@Resultado=@resultado OUTPUT;
 select @resultado
 
 
-select * from Profesor
+--3
+Use [BD_sistemaEscolar]
+
+go 
+declare @Grupo int
+set @Grupo=4
+declare @Result table (IdGrupo int,IdEstudiante int, Nombre nvarchar(200))
+
+insert into @Result
+EXEC Obtener_Estudiantes_Grupo @grupo;
+
+Select * from @Result

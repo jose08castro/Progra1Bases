@@ -9,8 +9,10 @@ USE [BD_sistemaEscolar]
 CREATE TABLE [dbo].[Estudiante](
     [IdEstudiante] [int] identity (1,1) NOT NULL PRIMARY KEY,--carne
 	[Nombre][nvarchar](150) NOT NULL,
+	[Apellido][nvarchar](150) NULL,
 	[Email][nvarchar](150)  NOT NULL,
 	[Password][nvarchar](150) NOT NULL,
+	[Carnet][int] NULL,
 	[Telefono][int] NULL,
     [Estado] [nvarchar](10) NOT NULL)
 
