@@ -125,4 +125,33 @@ BEGIN
 END
 GO
 
-SELECT * FROM Periodo_Lectivo
+
+-- 3
+
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <10/4/18>
+-- Description:	<Obtener Info  Profe >
+-- =============================================
+CREATE PROCEDURE Obtener_Info_Profe(
+	-- Add the parameters for the stored procedure here
+	@IdProfe int
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	declare @Result table (Nombre nvarchar(200),Apellido nvarchar(200))
+	SET NOCOUNT ON;
+	insert into @Result
+	Select RTRIM(P.Nombre),RTRIM(P.Apellido) from Profesor P where P.IdProfesor=@IdProfe
+
+	Select * from @Result 
+END
+GO
+

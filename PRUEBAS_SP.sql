@@ -56,7 +56,18 @@ EXEC Obtener_GruposPorProfesor @Idprofe , @type;
 
 Select * from @Result
 
+--5
+Use [BD_sistemaEscolar]
 
+go 
+declare @IdProfe int
+set @IdProfe = 2
+declare @Result table (Nombre nvarchar(200),Apellido nvarchar(200))
+
+insert into @Result
+EXEC Obtener_Info_Profe @IdProfe;
+
+Select * from @Result
 
 --prueba insertar estudiante
 Use [BD_sistemaEscolar]
