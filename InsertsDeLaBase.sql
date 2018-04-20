@@ -155,3 +155,72 @@ BEGIN
 	return @Result
 END
 GO
+
+--4
+
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <14/4/17>
+-- Description:	<Crear periodo lectivo>
+-- =============================================
+CREATE PROCEDURE Insertar_Status(
+	-- Add the parameters for the stored procedure here
+	@nombre nvarchar(150),
+	@Type int,
+	@Result int OUTPUT
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements. 
+	declare @Existe int
+	SET NOCOUNT ON;
+	BEGIN TRAN insertar
+		begin try
+		IF(@Type = 1) 
+			BEGIN
+			set @Existe = (select SG.IdStatus_Grupo from Status_Grupo SG WHERE SG.Nombre=@nombre)
+			IF @Existe IS NULL
+				BEGIN
+					Insert Into dbo.Status_Grupo(Nombre)
+					Values(@nombre)
+					set @Result = 1--correcto la insercion en status_grupo
+				END
+			ELSE
+				BEGIN
+				rollback TRAN insertar
+			set @Result = -2--YA EXISTE STATUS CON ESE NOMBRE 
+				END
+			END
+		ELSE 
+			BEGIN
+			set @Existe = (select SE.IdStatus_Estudiante from Status_Estudiante SE WHERE SE.Nombre=@nombre)
+			IF @Existe IS NULL
+				BEGIN
+					Insert Into dbo.Status_Estudiante(Nombre)
+					Values(@nombre)
+					set @Result = 1--correcto la insercion en status_estudiante
+				END
+			ELSE
+				BEGIN
+				rollback TRAN insertar
+			set @Result = -2--YA EXISTE STATUS CON ESE NOMBRE 
+				END
+			END
+		end try 
+		begin catch
+		rollback TRAN insertar
+		set @Result = -1--hubo un problema
+		end catch	
+	if(@Result !=-1 AND  @Result !=-2)
+	begin
+	commit tran insertar
+	end
+	return @Result
+END
+GO

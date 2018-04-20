@@ -108,14 +108,19 @@ AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
-	declare @Result table (IdGrupo int,IdPerido int,Codigo nvarchar(50),Nombre nvarchar(200))
+	declare @Result table (IdGrupo int,IdPerido int,Codigo nvarchar(50),Nombre nvarchar(200),Activo nvarchar(5))
 	SET NOCOUNT ON;
 	IF(@Class = 1)--para grupos activos
 	BEGIN
 		insert into @Result
-		Select G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre FROM Grupo G INNER JOIN Periodo_Lectivo P ON G.IdPeriodo=P.IdPeriodo WHERE P.Activo='TRUE' AND G.IdProfesor=@IdProfesor
+		Select G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,P.Activo FROM Grupo G INNER JOIN Periodo_Lectivo P ON G.IdPeriodo=P.IdPeriodo WHERE P.Activo='True' AND G.IdProfesor=@IdProfesor
 	END
 	ELSE--para grupos incativos 
+	BEGIN
+		insert into @Result
+		Select G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,P.Activo FROM Grupo G INNER JOIN Periodo_Lectivo P ON G.IdPeriodo=P.IdPeriodo WHERE P.Activo='False' AND G.IdProfesor=@IdProfesor
+	
+	END 
 	Select * from @Result 
 END
 GO

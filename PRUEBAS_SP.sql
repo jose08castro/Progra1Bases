@@ -41,6 +41,21 @@ EXEC Obtener_Estudiantes_Grupo @grupo;
 
 Select * from @Result
 
+--4
+
+Use [BD_sistemaEscolar]
+
+declare @Idprofe int
+set @Idprofe = 1
+declare @type int
+set @type =0
+declare @Result table (IdGrupo int,IdPerido int,Codigo nvarchar(50),Nombre nvarchar(200),Activo nvarchar(5))
+
+insert into @Result
+EXEC Obtener_GruposPorProfesor @Idprofe , @type;
+
+Select * from @Result
+
 
 
 --prueba insertar estudiante
@@ -54,3 +69,16 @@ EXec Insertar_Estudiante 'juan','solano','juanjose.com','12345',2016086099,88867
 select @resultado
 
 --select * from Estudiante
+
+
+--prueba insertar status 
+Use [BD_sistemaEscolar]
+
+go 
+declare @resultado int
+
+EXec Insertar_Status 'corriendo',1, @Result=@resultado OUTPUT;
+
+select @resultado
+
+select * from Status_Grupo
