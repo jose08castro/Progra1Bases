@@ -12,7 +12,16 @@ namespace ConsoleApp4
         private int idTerm;
         private string start;
         private string end;
-        private bool active;
+        private string active;
+
+        public Term(){}
+
+        public Term(int idTerm, string start, string end, string active){
+            setIdTerm(idTerm);
+            setStart(start);
+            setEnd(end);
+            setActive(active);
+        }
 
         //Métodos
         public int getIdTerm()
@@ -20,7 +29,7 @@ namespace ConsoleApp4
             return this.idTerm;
         }
 
-        public void setIdTerm(int pIdTerm)
+        private void setIdTerm(int pIdTerm)
         {
             this.idTerm = pIdTerm;
         }
@@ -30,7 +39,7 @@ namespace ConsoleApp4
             return this.start;
         }
 
-        public void setStart(string pStart)
+        private void setStart(string pStart)
         {
             this.start = pStart;
         }
@@ -40,27 +49,27 @@ namespace ConsoleApp4
             return this.end;
         }
 
-        public void setEnd(string pEnd)
+        private void setEnd(string pEnd)
         {
             this.end = pEnd;
         }
         //-----------------------------------------------------------------------//
-        public bool getActive()
+        public string getActive()
         {
             return this.active;
         }
 
-        public void setActive(bool pActive)
+        private void setActive(string pActive)
         {
             this.active = pActive;
         }
         //-----------------------------------------------------------------------//
         public void show()
         {
-            Console.WriteLine("IdTerm: ", this.getIdTerm());
-            Console.WriteLine("Start: ", this.getStart());
-            Console.WriteLine("End: ", this.getEnd());
-            Console.WriteLine("Status: ", this.getActive());
+            Console.WriteLine("IdTerm: " + this.getIdTerm());
+            Console.WriteLine("Start: " + this.getStart());
+            Console.WriteLine("End: " + this.getEnd());
+            Console.WriteLine("Status: " + this.getActive());
             Console.WriteLine("-----------------------------------------------------");
         }
     }

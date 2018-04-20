@@ -90,12 +90,12 @@ namespace ConsoleApp4
         //-----------------------------------------------------------------------//
         public void show()
         {
-            Console.WriteLine("IdGroup: ", this.getIdGroup());
-            Console.WriteLine("IdTerm: ", this.getIdTerm());
-            Console.WriteLine("Code ", this.getCode());
-            Console.WriteLine("IdTeacher: ", this.getIdTeacher());
-            Console.WriteLine("Name: ", this.getName());
-            Console.WriteLine("IdStatusGroup: ", this.getIdStatusGroup());
+            Console.WriteLine("IdGroup: "+this.getIdGroup());
+            Console.WriteLine("IdTerm: "+this.getIdTerm());
+            Console.WriteLine("Code: "+this.getCode());
+            Console.WriteLine("IdTeacher: "+this.getIdTeacher());
+            Console.WriteLine("Name: "+this.getName());
+            Console.WriteLine("IdStatusGroup: "+this.getIdStatusGroup());
             Console.WriteLine("-----------------------------------------------------");
         }
     }

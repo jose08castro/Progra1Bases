@@ -58,8 +58,11 @@
     <Compile Include="StatusGroup.cs" />
     <Compile Include="StatusStudent.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentMenu.cs" />
     <Compile Include="StudentXGroup.cs" />
     <Compile Include="Teacher.cs" />
+    <Compile Include="TeacherMenu.cs" />
+    <Compile Include="TeacherMenuAux.cs" />
     <Compile Include="Term.cs" />
   </ItemGroup>
   <ItemGroup>

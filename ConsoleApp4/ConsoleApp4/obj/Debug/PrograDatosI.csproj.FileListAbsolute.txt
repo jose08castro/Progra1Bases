@@ -1,0 +1,7 @@
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\PrograDatosI.csprojResolveAssemblyReference.cache
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\PrograDatosI.csproj.CoreCompileInputs.cache
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.exe
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.pdb
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\bin\Debug\ConsoleApp4.exe.config
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\bin\Debug\ConsoleApp4.exe
+C:\Users\Evelio\source\repos\ConsoleApp4\ConsoleApp4\bin\Debug\ConsoleApp4.pdb

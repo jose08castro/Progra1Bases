@@ -19,9 +19,7 @@ namespace ConsoleApp4
         public Student(int idStudent, string name, string email, string password, int phone, string state) {
             setIdStudent(idStudent);
             setName(name);
-            //setLastName(lastName);
             setEmail(email);
-            //setCarnet(carnet);
             setPassword(password);
             setPhone(phone);
             setState(state);
@@ -89,11 +87,12 @@ namespace ConsoleApp4
         }
         //-----------------------------------------------------------------------//
         public void show() {
-            Console.WriteLine("IdStudent: ",this.getIdStudent());
-            Console.WriteLine("Name: ", this.getName());
-            Console.WriteLine("Email: ", this.getEmail());
-            Console.WriteLine("Phone: ", this.getPhone());
-            Console.WriteLine("State: ", this.getState());
+            Console.WriteLine("IdStudent: "+this.getIdStudent());
+            Console.WriteLine("Name: "+this.getName());
+            Console.WriteLine("Email: "+this.getEmail());
+            Console.WriteLine("Password: "+this.getPassword());
+            Console.WriteLine("Phone: "+this.getPhone());
+            Console.WriteLine("State: "+this.getState());
             Console.WriteLine("-----------------------------------------------------");
         }
     }

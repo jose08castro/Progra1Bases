@@ -24,10 +24,9 @@ namespace ConsoleApp4
         }
 
         public void openConnection() {
-            connection = new SqlConnection("Data Source = EVELIO; Initial Catalog = PrograBD1; Integrated Security = True");
+            connection = new SqlConnection("Data Source = EVELIO; Initial Catalog = BD_sistemaEscolar; Integrated Security = True");
                                             //Data Source =.; Initial Catalog="+dataBase+"; Integrated Security=SSPI
             connection.Open();
-            System.Console.WriteLine("Conectó");
         }
 
         public DataTable getTable() {//Busca la tabla que se le diga
