@@ -302,7 +302,7 @@ GO
 
 
 
--- 10
+-- 11
 Use [BD_sistemaEscolar]
 SET ANSI_NULLS ON
 GO
@@ -315,17 +315,19 @@ GO
 -- =============================================
 CREATE PROCEDURE Obtener_Ultima_Modificacion(
 	-- Add the parameters for the stored procedure here
-	@IdEstu int
+	@Last int
 	)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
-	declare @Result table (Nombre nvarchar(200),Apellido nvarchar(200))
+	declare @Result table (IdNota int, Nombre nvarchar(200),Email nvarchar(200),Nota float,Fecha datetime )
 	SET NOCOUNT ON;
 	insert into @Result
-	Select RTRIM(E.Nombre),RTRIM(E.Apellido) from Estudiante E where E.IdEstudiante=@IdEstu
+	SELECT TOP 1 CN.IdNota,CN.NombreEvaluacion,CN.EmailEstudiante,CN.Nota,CN.FechaModificacion FROM DBO.Cambios_En_Nota CN ORDER BY CN.Id DESC
 
 	Select * from @Result 
 END
 GO
+
+select * from dbo.Cambios_En_Nota
