@@ -13,7 +13,8 @@ CREATE TABLE [dbo].[Estudiante](
 	[Email][nvarchar](150)  NOT NULL,
 	[Password][nvarchar](150) NOT NULL,
 	[Carnet][int] NULL,
-	[Telefono][int] NULL)
+	[Telefono][int] NULL,
+	[Visible] int NULL)
 
 
 USE [BD_sistemaEscolar]
@@ -31,7 +32,8 @@ CREATE TABLE [dbo].[Periodo_Lectivo](
     [IdPeriodo] [int] identity (1,1) NOT NULL PRIMARY KEY,
 	[Inicio] [datetime] NOT NULL,
 	[Fin] [datetime] NOT NULL,
-    [Activo] [nvarchar](5) NOT NULL)
+    [Activo] [nvarchar](5) NOT NULL,
+	[Visible] int NULL)
 
 
 USE [BD_sistemaEscolar]
@@ -55,7 +57,8 @@ CREATE TABLE [dbo].[Grupo](
 	[Codigo] [nvarchar](50) NOT NULL,
 	[IdProfesor][int] FOREIGN KEY REFERENCES Profesor(IdProfesor),
 	[Nombre][nvarchar](150) NOT NULL,
-	[Status][int]  FOREIGN KEY REFERENCES Status_Grupo(IdStatus_Grupo))
+	[Status][int]  FOREIGN KEY REFERENCES Status_Grupo(IdStatus_Grupo),
+	[Visible] int NULL)
 
 
 USE [BD_sistemaEscolar]
@@ -76,7 +79,8 @@ CREATE TABLE [dbo].[Evaluacion](
 	[Nombre][nvarchar](25) NOT NULL ,
     [Fecha] [datetime] NOT NULL,
 	[Porcentaje] [float] NOT NULL,
-	[Descripcion] [nvarchar](200) NOT NULL)
+	[Descripcion] [nvarchar](200) NOT NULL,
+	[Visible] int NULL)
 
 USE [BD_sistemaEscolar]
 
@@ -90,11 +94,13 @@ CREATE TABLE [dbo].[EstudiantesXGrupo](
     [IdGrupo] [int]  FOREIGN KEY REFERENCES Grupo(IdGrupo),
 	[IdEstudiante][int]  FOREIGN KEY REFERENCES Estudiante(IdEstudiante),
 	[NotaTotal] [float] NOT NULL,
-	[Status][int]FOREIGN KEY REFERENCES Status_Estudiante(IdStatus_Estudiante))
+	[Status][int]FOREIGN KEY REFERENCES Status_Estudiante(IdStatus_Estudiante),
+	[Visible] int NULL)
 
 CREATE TABLE [dbo].[NotasXGrupo](
 	[IdNotas] [int] identity (1,1) NOT NULL PRIMARY KEY,
     [IdEstudiantesXGrupo] [int]  FOREIGN KEY REFERENCES EstudiantesXGrupo(Id),
 	[IdEvaluacion][int]  FOREIGN KEY REFERENCES Evaluacion(IdEvaluacion),
-	[Obtenido] [float] NOT NULL)
+	[Obtenido] [float] NOT NULL,
+	[Visible] int NULL)
 
