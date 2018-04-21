@@ -110,6 +110,8 @@ BEGIN
 END
 GO
 
+
+
 --Calculo bitacora cambios 
 
 Use [BD_sistemaEscolar]
@@ -149,7 +151,7 @@ BEGIN
 	DECLARE @Fecha datetime
 	SET @iDEstudiante = (SELECT EG.IdEstudiante FROM EstudiantesXGrupo EG WHERE EG.Id=@idEstudinateXGrupo)
 	SET @Email = (SELECT E.Email FROM Estudiante E INNER JOIN EstudiantesXGrupo  EG ON E.IdEstudiante=EG.IdEstudiante WHERE EG.Id=@idEstudinateXGrupo)
-	SET @NombreEvaluacion = (SELECT E.Nombre FROM NotasXGrupo NG INNER JOIN Evaluacion E ON NG.IdEvaluacion=E.IdEvaluacion WHERE NG.IdEstudiantesXGrupo=@iDNota)
+	SET @NombreEvaluacion = (SELECT E.Nombre FROM NotasXGrupo NG INNER JOIN Evaluacion E ON NG.IdEvaluacion=E.IdEvaluacion WHERE NG.IdEstudiantesXGrupo=@idEstudinateXGrupo)
 	set @Fecha = GETDATE();
 	BEGIN
 		declare @Monto float 

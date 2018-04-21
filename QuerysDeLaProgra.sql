@@ -221,7 +221,7 @@ BEGIN
 	declare @Result table (IdEvaluacion int, IdEstu int, Nombre nvarchar(200),Porcentaje float,Obtenido float,PorcObte float, NotaFinal float)
 	SET NOCOUNT ON;
 	INSERT INTO @Result
-	SELECT E.IdEvaluacion ,EG.IdEstudiante,E.Nombre,E.Porcentaje,NG.Obtenido, (NG.Obtenido/100*E.Porcentaje),EG.NotaTotal
+	SELECT E.IdEvaluacion, E.Nombre, E.Porcentaje, NG.Obtenido, (NG.Obtenido/100*E.Porcentaje),EG.NotaTotal
 		FROM EstudiantesXGrupo EG INNER JOIN NotasXGrupo NG 
 		ON NG.IdEstudiantesXGrupo = EG.Id INNER JOIN Evaluacion E ON NG.IdEvaluacion=E.IdEvaluacion
 		WHERE EG.IdGrupo=@IdGrupo AND EG.IdEstudiante=@IdEstudiante
