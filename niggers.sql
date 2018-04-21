@@ -90,27 +90,25 @@ BEGIN
 	BEGIN
 		SET @idEstudinateXGrupo =
 	   (SELECT i.IdEstudiantesXGrupo
-	   FROM inserted i)
+	   FROM deleted i)
 	END
 	DECLARE @iDEstudiante int 
 	DECLARE @iDGrupo int
 	SET @iDEstudiante = (SELECT EG.IdEstudiante FROM EstudiantesXGrupo EG WHERE EG.Id=@idEstudinateXGrupo)
-	SET @iDGrupo = (SELECT EG.IdGrupo FROM EstudiantesXGrupo EG WHERE EG.IdGrupo=@iDGrupo)
-	IF NOT EXISTS (SELECT * FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
+	SET @iDGrupo = (SELECT Eg.IdGrupo  FROM EstudiantesXGrupo EG Where EG.IdEstudiante=@iDEstudiante and EG.Id=@idEstudinateXGrupo)
+	IF EXISTS (SELECT * FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
 					INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=@iDEstudiante 
 					AND EG.IdGrupo=@iDGrupo )
-	BEGIN
-		declare @NuevoTotal float 
-		SET @NuevoTotal = (SELECT SUM(NG.Obtenido/100*E.Porcentaje) 'LA SUMA DE LAS NOTAS ' FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
-							INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=@iDEstudiante AND EG.IdGrupo=@iDGrupo )
-		UPDATE EstudiantesXGrupo
-		SET NotaTotal=@NuevoTotal
-		WHERE Id=@idEstudinateXGrupo
-	END
+					BEGIN
+					declare @NuevoTotal float 
+					SET @NuevoTotal = (SELECT SUM(NG.Obtenido/100*E.Porcentaje) 'LA SUMA DE LAS NOTAS ' FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
+										INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=@iDEstudiante AND EG.IdGrupo=@iDGrupo )
+					UPDATE EstudiantesXGrupo
+					SET NotaTotal=@NuevoTotal
+					WHERE Id=@idEstudinateXGrupo
+					END
 END
 GO
-
-
 
 --Calculo bitacora cambios 
 

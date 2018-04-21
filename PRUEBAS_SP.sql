@@ -173,3 +173,17 @@ select * from NotasXGrupo N inner join EstudiantesXGrupo E on E.Id=N.IdEstudiant
 
 
 
+--prueba upsate 
+Use [BD_sistemaEscolar]
+
+go 
+declare @resultado int
+declare @time  datetime 
+set @time = GETDATE();
+EXec  Actualizar_Nota 1,80,77, @Result=@resultado OUTPUT;
+
+select @resultado
+
+
+select * from NotasXGrupo NG inner join EstudiantesXGrupo EG on NG.IdEstudiantesXGrupo=EG.Id 
+Where EG.IdEstudiante=1 and NG.IdEvaluacion=80
