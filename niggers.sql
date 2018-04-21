@@ -80,40 +80,41 @@ CREATE TRIGGER CalcularNota ON NotasXGrupo
 AS
 BEGIN
 	SET NOCOUNT ON;
-	DECLARE @idEvaluacion AS int
+	DECLARE @idEstudinateXGrupo AS int
 	IF EXISTS (SELECT * FROM inserted) -- Es insert u update
 	BEGIN
-	   SET @idEvaluacion =
-	   (SELECT i.IdEvaluacion
-	   FROM inserted i)
-	   SET @idConfig =
-	   (SELECT i.IdConfig_Evaluacion
+	   SET @idEstudinateXGrupo =
+	   (SELECT i.IdEstudiantesXGrupo
 	   FROM inserted i)
 	END
 	ELSE
 	BEGIN
-		SET @idEvaluacion =
-	   (SELECT d.IdEvaluacion
-	   FROM deleted d)
-	   SET @idConfig =
-	   (SELECT i.IdConfig_Evaluacion
-	   FROM deleted i)
+		SET @idEstudinateXGrupo =
+	   (SELECT i.IdEstudiantesXGrupo
+	   FROM inserted i)
 	END
-	SET @idGrupo = ( Select Distinct(CE.IdGrupo) from Evaluacion E inner join Config_Evaluacion CE 
-					on E.IdConfig_Evaluacion=CE.IdConfig_Evaluacion 
-					where CE.IdConfig_Evaluacion=@idConfig)
-
-	IF NOT EXISTS (Select * from NotasXGrupo NG inner join EstudiantesXGrupo EG On Ng.IdEstudiantesXGrupo=Eg.Id
-					WHERE EG.IdGrupo=@idGrupo AND NG.IdEvaluacion=@idEvaluacion)
+	DECLARE @iDEstudiante int 
+	DECLARE @iDGrupo int
+	SET @iDEstudiante = (SELECT EG.IdEstudiante FROM EstudiantesXGrupo EG WHERE EG.Id=@idEstudinateXGrupo)
+	SET @iDGrupo = (SELECT EG.IdGrupo FROM EstudiantesXGrupo EG WHERE EG.IdGrupo=@iDGrupo)
+	IF NOT EXISTS (SELECT * FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
+					INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=@iDEstudiante 
+					AND EG.IdGrupo=@iDGrupo )
 	BEGIN
-		declare @temp table (Id int, IdEvaluacion int, Obtenido int)
-		insert into @temp
-		Select EG.Id,@idEvaluacion,0 from EstudiantesXGrupo EG where EG.IdGrupo=@idGrupo;
-		
-		INSERT INTO NotasXGrupo
-		select * from @temp
+		declare @NuevoTotal float 
+		SET @NuevoTotal = (SELECT SUM(NG.Obtenido/100*E.Porcentaje) 'LA SUMA DE LAS NOTAS ' FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
+							INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=@iDEstudiante AND EG.IdGrupo=@iDGrupo )
+		UPDATE EstudiantesXGrupo
+		SET NotaTotal=@NuevoTotal
+		WHERE Id=@idEstudinateXGrupo
 	END
 END
 GO
+
+--SELECT SUM(NG.Obtenido/100*E.Porcentaje) 'LA SUMA DE LAS NOTAS ' FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
+--INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=3 AND EG.IdGrupo=8 
+
+--SELECT * FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
+--INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=3 AND EG.IdGrupo=8 
 
 
