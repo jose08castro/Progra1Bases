@@ -111,10 +111,55 @@ BEGIN
 END
 GO
 
---SELECT SUM(NG.Obtenido/100*E.Porcentaje) 'LA SUMA DE LAS NOTAS ' FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
---INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=3 AND EG.IdGrupo=8 
 
---SELECT * FROM NotasXGrupo NG INNER JOIN EstudiantesXGrupo EG ON NG.IdEstudiantesXGrupo=EG.Id 
---INNER JOIN Evaluacion E ON E.IdEvaluacion=NG.IdEvaluacion WHERE EG.IdEstudiante=3 AND EG.IdGrupo=8 
 
+--Calculo bitacora cambios 
+
+Use [BD_sistemaEscolar]
+-- =============================================
+-- Author:		Juan Jose Solano Morera
+-- Create date: 17/4/2018
+-- Description:	bitacora cambios nota 
+-- =============================================
+IF EXISTS(
+  SELECT *
+    FROM sys.triggers
+   WHERE name = 'BitacoraCambios'
+     AND parent_class_desc = 'NotasXGrupos'
+)
+	DROP TRIGGER BitacoraCambios ON DATABASE
+GO
+
+CREATE TRIGGER BitacoraCambios ON NotasXGrupo
+	FOR UPDATE 
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @idEstudinateXGrupo AS int
+	DECLARE @iDNota AS INT 
+	IF EXISTS (SELECT * FROM inserted) -- Es insert u update
+	BEGIN
+	   SET @idEstudinateXGrupo =
+	   (SELECT i.IdEstudiantesXGrupo
+	   FROM inserted i)
+	   SET @iDNota =
+	   (SELECT i.IdNotas
+	   FROM inserted i)
+	END
+	DECLARE @iDEstudiante int
+	DECLARE @NombreEvaluacion nvarchar(200)
+	DECLARE @Email nvarchar(200)
+	DECLARE @Fecha datetime
+	SET @iDEstudiante = (SELECT EG.IdEstudiante FROM EstudiantesXGrupo EG WHERE EG.Id=@idEstudinateXGrupo)
+	SET @Email = (SELECT E.Email FROM Estudiante E INNER JOIN EstudiantesXGrupo  EG ON E.IdEstudiante=EG.IdEstudiante WHERE EG.Id=@idEstudinateXGrupo)
+	SET @NombreEvaluacion = (SELECT E.Nombre FROM NotasXGrupo NG INNER JOIN Evaluacion E ON NG.IdEvaluacion=E.IdEvaluacion WHERE NG.IdEstudiantesXGrupo=@iDNota)
+	set @Fecha = GETDATE();
+	BEGIN
+		declare @Monto float 
+		SET @Monto = (SELECT NG.Obtenido FROM NotasXGrupo NG WHERE NG.IdNotas=@iDNota)
+		INSERT INTO dbo.Cambios_En_Nota
+		values(@iDNota,@NombreEvaluacion,@Email,@Monto,@Fecha)
+	END
+END
+GO
 

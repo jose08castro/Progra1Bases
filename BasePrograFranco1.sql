@@ -104,3 +104,14 @@ CREATE TABLE [dbo].[NotasXGrupo](
 	[Obtenido] [float] NOT NULL,
 	[Visible] int NULL)
 
+
+--Adicional a la base normal 
+
+USE [BD_sistemaEscolar]
+CREATE TABLE [dbo].[Cambios_En_Nota](
+	[Id] [int] identity (1,1) NOT NULL PRIMARY KEY,
+    [IdNota] [int]  FOREIGN KEY REFERENCES NotasXGrupo(IdNotas),
+	[NombreEvaluacion] [nvarchar](50) NOT NULL,
+	[EmailEstudiante] [nvarchar](200) NOT NULL,
+	[Nota] [float] NOT NULL,
+	[FechaModificacion] [datetime] NOT NULL)
