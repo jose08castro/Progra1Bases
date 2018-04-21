@@ -82,7 +82,20 @@ EXEC  Obtener_Rubro_Sestu_SGru @TYPE;
 
 Select * from @Result
 
+--7
+Use [BD_sistemaEscolar]
 
+go 
+declare @idGrupo int
+set @idGrupo= 4
+declare @idEstu int
+set @idEstu= 17
+declare @Result table (IdEstu int, Nombre nvarchar(200),Porcentaje float,Obtenido float,PorcObte float, NotaFinal float)
+
+insert into @Result
+EXEC   Obtener_Notas_Estu @idGrupo,@idEstu;
+
+Select * from @Result
 
 
 --INSERTS DE AQUI A ABAJO
