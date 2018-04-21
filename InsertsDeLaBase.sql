@@ -487,7 +487,7 @@ GO
 -- Create date: <16/4/17>
 -- Description:	<Actualizar nota en notasxgrupo>
 -- =============================================
-CREATE PROCEDURE Insertar_Evaluacion(
+CREATE PROCEDURE Actualizar_Nota(
 	-- Add the parameters for the stored procedure here
 	@IdEstudinate int,
 	@IdEvaluacion int,
@@ -521,7 +521,7 @@ BEGIN
 		rollback TRAN insertar
 		set @Result = -1--hubo un problema
 		end catch	
-	if(@Result !=-1)
+	if(@Result !=-1 and @Result !=-2)
 	begin
 	commit tran insertar
 	end
@@ -529,9 +529,5 @@ BEGIN
 END
 GO
 
-
-
-SELECT * FROM EstudiantesXGrupo EG inner join NotasXGrupo NG on EG.Id=NG.IdEstudiantesXGrupo inner join Evaluacion E 
-on NG.IdEvaluacion=E.IdEvaluacion where EG.IdEstudiante=3 and E.IdEvaluacion=80
 
 
