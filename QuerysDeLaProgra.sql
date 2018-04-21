@@ -230,6 +230,46 @@ BEGIN
 END
 GO
 
+-- 8
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <10/4/18>
+-- Description:	<Obtener grupo por  id estudiante>
+-- =============================================
+CREATE PROCEDURE Obtener_Grupos_Estu(
+	-- Add the parameters for the stored procedure here
+	@IdEstudiante int,
+	@Class int
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	declare @Result table (IdGrupo int,IdPeriodo int , Codigo nvarchar(200),Nombre nvarchar(200),Status int)
+	SET NOCOUNT ON;
+	IF(@Class = 1)
+		BEGIN
+			INSERT INTO @Result
+			SELECT G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,G.Status FROM EstudiantesXGrupo EG INNER JOIN Grupo G 
+				ON EG.IdGrupo=G.IdGrupo INNER JOIN Periodo_Lectivo P on G.IdPeriodo=P.IdPeriodo
+				  WHERE EG.IdEstudiante=@IdEstudiante and P.Activo='True'
+		END
+	ELSE
+		BEGIN
+		INSERT INTO @Result
+			SELECT G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,G.Status FROM EstudiantesXGrupo EG INNER JOIN Grupo G 
+				ON EG.IdGrupo=G.IdGrupo INNER JOIN Periodo_Lectivo P on G.IdPeriodo=P.IdPeriodo
+				  WHERE EG.IdEstudiante=@IdEstudiante and P.Activo='False'
+		END
+
+	Select * from @Result 
+END
+GO
 
 
 

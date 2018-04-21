@@ -404,8 +404,8 @@ BEGIN
 	SET NOCOUNT ON;
 	BEGIN TRAN insertar
 		begin try
-		Set @Exist = (SELECT * FROM Config_Evaluacion C where c.IdRubro=@IdRubro and C.IdGrupo=@IdGrupo)
-		IF @Exist IS NULL and @Numero >0
+		Set @Exist = (SELECT C.IdConfig_Evaluacion FROM Config_Evaluacion C where C.IdRubro=@IdRubro and C.IdGrupo=@IdGrupo)
+		IF( (@Exist IS NULL )and @Numero >0)
 		BEGIN
 			Insert Into dbo.Config_Evaluacion(IdRubro,IdGrupo,Numero,Porcentaje,Constante)
 			Values(@IdRubro,@IdGrupo,@Numero,@Porcentaje,@Constante)
