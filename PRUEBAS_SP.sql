@@ -153,3 +153,23 @@ select @resultado
 select * from Rubro
 
 
+
+--prueba insertar rubro 
+Use [BD_sistemaEscolar]
+
+go 
+declare @resultado int
+declare @time  datetime 
+set @time = GETDATE();
+EXec Insertar_Evaluacion 32,'prueba',@time,25.5,'ESTO ES UNA PUTA PRUEBA', @Result=@resultado OUTPUT;
+
+select @resultado
+
+select * from Config_Evaluacion
+
+Select * from Evaluacion
+
+select * from NotasXGrupo N inner join EstudiantesXGrupo E on E.Id=N.IdEstudiantesXGrupo where E.IdGrupo=8
+
+
+
