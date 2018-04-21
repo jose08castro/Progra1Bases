@@ -459,9 +459,9 @@ BEGIN
 	SET NOCOUNT ON;
 	BEGIN TRAN insertar
 		begin try
-		Insert Into dbo.Config_Evaluacion(IdRubro,IdGrupo,Numero,Porcentaje,Constante)
-		Values(@IdRubro,@IdGrupo,@Numero,@Porcentaje,@Constante)
-
+		Insert Into dbo.Evaluacion(IdConfig_Evaluacion, Nombre ,Fecha,Porcentaje,Descripcion)
+		Values(@IdConfigEva,@Nombre,@Fecha,@Porcentaje,@Descripcion)
+		Set @Result =1
 		end try 
 		begin catch
 		rollback TRAN insertar
