@@ -81,7 +81,7 @@ BEGIN
 	declare @Result table (IdGrupo int,IdEstudiante int, Nombre nvarchar(200), Apellido nvarchar(200) )
 	SET NOCOUNT ON;
 	insert into @Result
-	Select E.IdGrupo,E.IdEstudiante, RTRIM(ES.Nombre),RTRIM(ES.Apellido) from EstudiantesXGrupo E inner join Estudiante ES on E.IdEstudiante=ES.IdEstudiante where E.IdGrupo=@IdGrupo
+	Select E.IdGrupo,E.IdEstudiante, RTRIM(ES.Nombre) 'Nombre',RTRIM(ES.Apellido) 'Apellido' from EstudiantesXGrupo E inner join Estudiante ES on E.IdEstudiante=ES.IdEstudiante where E.IdGrupo=@IdGrupo
 
 	Select * from @Result 
 END
