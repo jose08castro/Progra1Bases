@@ -322,3 +322,56 @@ BEGIN
 	return @Result
 END
 GO
+
+
+--7
+
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <14/4/17>
+-- Description:	<Insertar Estudiante en un grupo>
+-- =============================================
+CREATE PROCEDURE Insertar_EstudianteEnGrupo(
+	-- Add the parameters for the stored procedure here
+	@IdGrupo int,
+	@IdEstudiante  int,
+	@Result int OUTPUT
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements. 
+	declare @Exist int 
+	SET NOCOUNT ON;
+	BEGIN TRAN insertar
+		begin try
+		Set @Exist = (Select EG.Id from EstudiantesXGrupo EG where EG.IdEstudiante=@IdEstudiante and EG.IdGrupo=@IdGrupo)
+		IF @Exist IS NULL
+		BEGIN
+			Insert Into dbo.EstudiantesXGrupo(IdGrupo,IdEstudiante,NotaTotal,Status)
+			Values(@IdGrupo,@IdEstudiante,0,2)
+			set @Result = 1--correcto
+		END
+		ELSE 
+			BEGIN
+			rollback TRAN insertar
+			set @Result = -2--ya existia 
+			END
+		end try 
+		begin catch
+		rollback TRAN insertar
+		set @Result = -1--hubo un problema
+		end catch	
+	if(@Result !=-1)
+	begin
+	commit tran insertar
+	end
+	return @Result
+END
+GO
+

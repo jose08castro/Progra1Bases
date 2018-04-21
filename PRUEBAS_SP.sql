@@ -46,9 +46,9 @@ Select * from @Result
 Use [BD_sistemaEscolar]
 
 declare @Idprofe int
-set @Idprofe = 1
+set @Idprofe = 2
 declare @type int
-set @type =0
+set @type =1
 declare @Result table (IdGrupo int,IdPerido int,Codigo nvarchar(50),Nombre nvarchar(200),Activo nvarchar(5))
 
 insert into @Result
@@ -68,6 +68,25 @@ insert into @Result
 EXEC Obtener_Info_Profe @IdProfe;
 
 Select * from @Result
+
+--6
+Use [BD_sistemaEscolar]
+
+go 
+declare @TYPE int
+set @TYPE= 3
+declare @Result table (Id INT,Nombre nvarchar(200))
+
+insert into @Result
+EXEC  Obtener_Rubro_Sestu_SGru @TYPE;
+
+Select * from @Result
+
+
+
+
+--INSERTS DE AQUI A ABAJO
+
 
 --prueba insertar estudiante
 Use [BD_sistemaEscolar]

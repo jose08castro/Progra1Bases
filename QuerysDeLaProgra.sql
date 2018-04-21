@@ -154,3 +154,45 @@ BEGIN
 END
 GO
 
+-- 6
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <10/4/18>
+-- Description:	<Obtener Rubro o StatusEstudiante o StatusGrupo >
+-- =============================================
+CREATE PROCEDURE Obtener_Rubro_Sestu_SGru(
+	-- Add the parameters for the stored procedure here
+	@Type int
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	declare @Result table (Id int, Nombre nvarchar(200))
+	SET NOCOUNT ON;
+	IF(@Type = 1)
+		BEGIN 
+			INSERT INTO @Result
+			SELECT * FROM dbo.Rubro
+		END
+	ELSE 
+		BEGIN
+			IF(@Type = 2)
+				BEGIN
+					INSERT INTO @Result
+					SELECT * FROM dbo.Status_Estudiante
+				END
+			ELSE
+				BEGIN
+					INSERT INTO @Result
+					SELECT * FROM dbo.Status_Grupo
+				END
+		END
+	Select * from @Result 
+END
+GO
