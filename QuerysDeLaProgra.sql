@@ -78,10 +78,10 @@ AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
-	declare @Result table (IdGrupo int,IdEstudiante int, Nombre nvarchar(200) )
+	declare @Result table (IdGrupo int,IdEstudiante int, Nombre nvarchar(200), Apellido nvarchar(200) )
 	SET NOCOUNT ON;
 	insert into @Result
-	Select E.IdGrupo,E.IdEstudiante, RTRIM(ES.Nombre) from EstudiantesXGrupo E inner join Estudiante ES on E.IdEstudiante=ES.IdEstudiante where E.IdGrupo=@IdGrupo
+	Select E.IdGrupo,E.IdEstudiante, RTRIM(ES.Nombre),RTRIM(ES.Apellido) from EstudiantesXGrupo E inner join Estudiante ES on E.IdEstudiante=ES.IdEstudiante where E.IdGrupo=@IdGrupo
 
 	Select * from @Result 
 END
