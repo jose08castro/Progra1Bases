@@ -166,7 +166,7 @@ GO
 -- =============================================
 -- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
 -- Create date: <14/4/17>
--- Description:	<Crear periodo lectivo>
+-- Description:	<insertar status>
 -- =============================================
 CREATE PROCEDURE Insertar_Status(
 	-- Add the parameters for the stored procedure here

@@ -250,19 +250,19 @@ AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
-	declare @Result table (IdGrupo int,IdPeriodo int , Codigo nvarchar(200),Nombre nvarchar(200),Status int)
+	declare @Result table (IdGrupo int,IdPeriodo int , Codigo nvarchar(200),Nombre nvarchar(200),Status nvarchar(5))
 	SET NOCOUNT ON;
 	IF(@Class = 1)
 		BEGIN
 			INSERT INTO @Result
-			SELECT G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,G.Status FROM EstudiantesXGrupo EG INNER JOIN Grupo G 
+			SELECT G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre, P.Activo FROM EstudiantesXGrupo EG INNER JOIN Grupo G 
 				ON EG.IdGrupo=G.IdGrupo INNER JOIN Periodo_Lectivo P on G.IdPeriodo=P.IdPeriodo
 				  WHERE EG.IdEstudiante=@IdEstudiante and P.Activo='True'
 		END
 	ELSE
 		BEGIN
 		INSERT INTO @Result
-			SELECT G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,G.Status FROM EstudiantesXGrupo EG INNER JOIN Grupo G 
+			SELECT G.IdGrupo,G.IdPeriodo,G.Codigo,G.Nombre,P.Activo FROM EstudiantesXGrupo EG INNER JOIN Grupo G 
 				ON EG.IdGrupo=G.IdGrupo INNER JOIN Periodo_Lectivo P on G.IdPeriodo=P.IdPeriodo
 				  WHERE EG.IdEstudiante=@IdEstudiante and P.Activo='False'
 		END

@@ -97,6 +97,19 @@ EXEC   Obtener_Notas_Estu @idGrupo,@idEstu;
 
 Select * from @Result
 
+--8
+Use [BD_sistemaEscolar]
+
+go 
+declare @idEstu int
+Set @idEstu = 2
+declare @Result table (IdGrupo int,IdPeriodo int , Codigo nvarchar(200),Nombre nvarchar(200),Status NVARCHAR(5))
+
+insert into @Result
+EXEC  Obtener_Grupos_Estu @idEstu,0;
+
+Select * from @Result
+
 
 --INSERTS DE AQUI A ABAJO
 
