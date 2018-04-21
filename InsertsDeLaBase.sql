@@ -442,13 +442,13 @@ GO
 -- Create date: <16/4/17>
 -- Description:	<Insertar  Evalucion>
 -- =============================================
-CREATE PROCEDURE Insertar_ConfigEva(
+CREATE PROCEDURE Insertar_Evaluacion(
 	-- Add the parameters for the stored procedure here
-	@IdRubro int,
-	@IdGrupo  int,
-	@Numero int,
+	@IdConfigEva int,
+	@Nombre  nvarchar(150),
+	@Fecha datetime ,
 	@Porcentaje float,
-	@Constante nvarchar(5),
+	@Descripcion nvarchar(200),
 	@Result int OUTPUT
 	)
 AS
@@ -459,27 +459,23 @@ BEGIN
 	SET NOCOUNT ON;
 	BEGIN TRAN insertar
 		begin try
-		Set @Exist = (SELECT C.IdConfig_Evaluacion FROM Config_Evaluacion C where C.IdRubro=@IdRubro and C.IdGrupo=@IdGrupo)
-		IF( (@Exist IS NULL )and @Numero >0)
-		BEGIN
-			Insert Into dbo.Config_Evaluacion(IdRubro,IdGrupo,Numero,Porcentaje,Constante)
-			Values(@IdRubro,@IdGrupo,@Numero,@Porcentaje,@Constante)
-			set @Result = 1--correcto
-		END
-		ELSE 
-			BEGIN
-			rollback TRAN insertar
-			set @Result = -2--ya existia o numero igual a 0
-			END
+		Insert Into dbo.Config_Evaluacion(IdRubro,IdGrupo,Numero,Porcentaje,Constante)
+		Values(@IdRubro,@IdGrupo,@Numero,@Porcentaje,@Constante)
+
 		end try 
 		begin catch
 		rollback TRAN insertar
 		set @Result = -1--hubo un problema
 		end catch	
-	if(@Result !=-1 and @Result !=-2)
+	if(@Result !=-1)
 	begin
 	commit tran insertar
 	end
 	return @Result
 END
 GO
+
+
+
+
+

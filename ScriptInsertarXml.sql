@@ -3,7 +3,8 @@
 USE  OPENXMLTesting
 GO
 
-declare @tempo as table(nombre nvarchar(150),apellido nvarchar(150), email nvarchar(150), password nvarchar(150),Carnet int, telefono int)
+declare @tempo as table(nombre nvarchar(150),apellido nvarchar(150), email nvarchar(150), 
+						password nvarchar(150),Carnet int, telefono int)
 
 DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)
 
