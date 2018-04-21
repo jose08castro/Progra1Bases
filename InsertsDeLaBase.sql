@@ -475,7 +475,63 @@ BEGIN
 END
 GO
 
+--10
+
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <16/4/17>
+-- Description:	<Actualizar nota en notasxgrupo>
+-- =============================================
+CREATE PROCEDURE Insertar_Evaluacion(
+	-- Add the parameters for the stored procedure here
+	@IdEstudinate int,
+	@IdEvaluacion int,
+	@Nota float,
+	@Result int OUTPUT
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements. 
+	declare @IdNota   int 
+	SET NOCOUNT ON;
+	BEGIN TRAN insertar
+		begin try
+			Set @IdNota = (SELECT Ng.IdNotas FROM EstudiantesXGrupo EG inner join NotasXGrupo NG on EG.Id=NG.IdEstudiantesXGrupo inner join Evaluacion E 
+						on NG.IdEvaluacion=E.IdEvaluacion where EG.IdEstudiante=@IdEstudinate and E.IdEvaluacion=@IdEvaluacion)
+			IF @IdNota IS NOT NULL
+			BEGIN
+			UPDATE dbo.NotasXGrupo
+			SET Obtenido = @Nota
+			WHERE IdNotas = @IdNota
+			Set @Result =1
+			END
+			ELSE 
+			BEGIN
+			rollback TRAN insertar
+			set @Result = -2--No existia la nota buscada 
+			END
+		end try 
+		begin catch
+		rollback TRAN insertar
+		set @Result = -1--hubo un problema
+		end catch	
+	if(@Result !=-1)
+	begin
+	commit tran insertar
+	end
+	return @Result
+END
+GO
 
 
+
+SELECT * FROM EstudiantesXGrupo EG inner join NotasXGrupo NG on EG.Id=NG.IdEstudiantesXGrupo inner join Evaluacion E 
+on NG.IdEvaluacion=E.IdEvaluacion where EG.IdEstudiante=3 and E.IdEvaluacion=80
 
 
