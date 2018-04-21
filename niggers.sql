@@ -1,8 +1,9 @@
+
 Use [BD_sistemaEscolar]
 -- =============================================
--- Author:		Juan Jose Solano
--- Create date: 17/4/2018
--- Description:	insertar notas iniciales 
+-- Author:		Eduard Torres
+-- Create date: 17/11/2017
+-- Description:	Pregunta 1, b.
 -- =============================================
 IF EXISTS(
   SELECT *
@@ -36,8 +37,7 @@ BEGIN
 		SET @idEvaluacion =
 	   (SELECT d.IdEvaluacion
 	   FROM deleted d)
-	   SET @idConfig =
-	   (SELECT i.IdConfig_Evaluacion
+	   SET @idConfig = (SELECT i.IdConfig_Evaluacion
 	   FROM deleted i)
 	END
 	SET @idGrupo = ( Select Distinct(CE.IdGrupo) from Evaluacion E inner join Config_Evaluacion CE 
@@ -47,16 +47,15 @@ BEGIN
 	IF NOT EXISTS (Select * from NotasXGrupo NG inner join EstudiantesXGrupo EG On Ng.IdEstudiantesXGrupo=Eg.Id
 					WHERE EG.IdGrupo=@idGrupo AND NG.IdEvaluacion=@idEvaluacion)
 	BEGIN
-		declare @temp table (Id int, IdEvaluacion int, Obtenido int)
+		declare @temp table (Id int, IdEvaluacion int, Obtenido int,Visible int)
 		insert into @temp
-		Select EG.Id,@idEvaluacion,0 from EstudiantesXGrupo EG where EG.IdGrupo=@idGrupo;
+		Select EG.Id,@idEvaluacion,0,1 from EstudiantesXGrupo EG where EG.IdGrupo=@idGrupo;
 		
 		INSERT INTO NotasXGrupo
 		select * from @temp
 	END
 END
 GO
-
 
 --Calculo notas totales 
 
