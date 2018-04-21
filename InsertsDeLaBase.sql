@@ -367,7 +367,7 @@ BEGIN
 		rollback TRAN insertar
 		set @Result = -1--hubo un problema
 		end catch	
-	if(@Result !=-1)
+	if(@Result !=-1 and @Result !=-2)
 	begin
 	commit tran insertar
 	end
@@ -375,3 +375,56 @@ BEGIN
 END
 GO
 
+--8
+
+Use [BD_sistemaEscolar]
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<00776dc467f2b588b23350d2db96c58163ecbca282e7199a6d7746542d1b30ad>
+-- Create date: <14/4/17>
+-- Description:	<Insertar Estudiante en un grupo>
+-- =============================================
+CREATE PROCEDURE Insertar_ConfigEva(
+	-- Add the parameters for the stored procedure here
+	@IdRubro int,
+	@IdGrupo  int,
+	@Numero int,
+	@Porcentaje float,
+	@Constante nvarchar(5),
+	@Result int OUTPUT
+	)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements. 
+	declare @Exist int 
+	SET NOCOUNT ON;
+	BEGIN TRAN insertar
+		begin try
+		Set @Exist = (SELECT * FROM Config_Evaluacion C where c.IdRubro=@IdRubro and C.IdGrupo=@IdGrupo)
+		IF @Exist IS NULL and @Numero >0
+		BEGIN
+			Insert Into dbo.Config_Evaluacion(IdRubro,IdGrupo,Numero,Porcentaje,Constante)
+			Values(@IdRubro,@IdGrupo,@Numero,@Porcentaje,@Constante)
+			set @Result = 1--correcto
+		END
+		ELSE 
+			BEGIN
+			rollback TRAN insertar
+			set @Result = -2--ya existia o numero igual a 0
+			END
+		end try 
+		begin catch
+		rollback TRAN insertar
+		set @Result = -1--hubo un problema
+		end catch	
+	if(@Result !=-1 and @Result !=-2)
+	begin
+	commit tran insertar
+	end
+	return @Result
+END
+GO

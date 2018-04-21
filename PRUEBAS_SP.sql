@@ -46,9 +46,9 @@ Select * from @Result
 Use [BD_sistemaEscolar]
 
 declare @Idprofe int
-set @Idprofe = 2
+set @Idprofe = 4
 declare @type int
-set @type =1
+set @type =0
 declare @Result table (IdGrupo int,IdPerido int,Codigo nvarchar(50),Nombre nvarchar(200),Activo nvarchar(5))
 
 insert into @Result
